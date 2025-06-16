@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kitchenart_main</title>
+    <link rel="stylesheet" href="../kitchenart/css/index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        function updateDot(index) {
+            $(".one > li").removeClass("one_first");
+            $(".one > li").eq(index).addClass("one_first");
+        }
+        $(document).ready(function(){
+            //헤더
+            $(".accodian").addClass("hidden");
+            //햄버거 버튼 누르면 아코디언 나옴
+            $(".ham").click(function () {
+                $(".accodian").removeClass("hidden").addClass("visible");
+            });
+            //아코디언 닫기 버튼 누르면 전체 오른쪽으로 숨기기
+            $(".close").click(function () {
+                $(".accodian").addClass("hidden");
+            });
+            //아코디언 세부메뉴 내리기+올리기
+            $(".lnb>li>a").click(function(e){
+                e.preventDefault();
+
+                if($(this).hasClass("active")){
+                    $(".lnb>li>a").siblings("ul").stop().slideUp(500);
+                    $(".lnb>li>a").removeClass("active");
+                    $(this).removeClass("active");
+                    $(this).siblings("ul").slideUp(500);
+                }else{
+                    $(".lnb>li>a").siblings("ul").stop().slideUp(500);
+                    $(".lnb>li>a").removeClass("active");
+                    $(this).addClass("active");
+                    $(this).siblings("ul").slideDown(500);
+                }
+            });
+            //섹션
+            //carousel
+            let wid = $(".carousel").width();
+            let list = 0;
+            let count = $(".panel>li").length; 
+
+            $(".panel").css("margin-left", 0);
+
+            $(".prev").click(function(){
+                let wid = $(".carousel").width();
+                list = (list + 1) % count;
+                if(list == count-1){
+                    list = 0;
+                }else{
+                    list++;
+                }
+                $(".panel").stop().animate({"margin-left":-wid * list});
+                updateDot(list);
+            });    
+
+            $(".next").click(function(){
+                let wid = $(".carousel").width();
+                list = (list - 1 + count) % count;
+                if(list == 0){
+                    list = count - 1;
+                }else{
+                    list--;
+                }
+                $(".panel").stop().animate({"margin-left":-wid * list});
+                updateDot(list);
+            });
+
+            $(".one > li").click(function(){
+                let index = $(this).index(); 
+                list = index;
+                let wid = $(".carousel").width();
+                $(".panel").stop().animate({"margin-left": -wid * list});
+                updateDot(list);
+            });
+            //hot
+            $(".hot_show > ul").hide();
+            $(".hot_show > ul").eq(0).show();
+
+            $(".hot_menu > li").not(".me_line").click(function(){                 
+                let list = $(this).index(".hot_menu > li:not(.me_line)");                      
+                $(".hot_show > ul").hide();                                             
+                $(".hot_show > ul").eq(list).show();                                  
+                $(".hot_menu > li").removeClass("me_first");                  
+                $(this).addClass("me_first");             
+            });    
+        });   
+    </script>
+</head>
+<body>
+    <div id="header">
+        <div class="back_b">
+            <ul>
+                <li><a href="#">회원가입</a></li>
+                <li> | </li>
+                <li><a href="#">로그인</a></li>
+            </ul>
+        </div>
+        <div class="back_w">
+            <div class="logo_b"><a href="index.html"><img src="../kitchenart/images/logo_b.png" alt=""></a></div>
+            <form action="/search" method="GET" class="search-box">
+                <input type="text" name="q">
+                <button type="submit">
+                    <img src="../kitchenart/images/Sear.png" alt="">
+                </button>
+            </form>
+            <ul class="gnb">
+                <li><h3><a href="#">회사소개</a></h3></li>
+                <li>
+                    <h3><a href="kitchen-art_2.html">제품</a></h3>
+                    <ul class="sub">
+                        <li><a href="kitchen-art_2.html">Bast 상품</a></li>
+                        <li><a href="kitchen-art_2.html">냄비</a></li>
+                        <li><a href="kitchen-art_2.html">후라이팬</a></li>
+                        <li><a href="kitchen-art_2.html">압력솥</a></li>
+                        <li><a href="kitchen-art_2.html">주전자</a></li>
+                        <li><a href="kitchen-art_2.html">그릴류</a></li>
+                        <li><a href="kitchen-art_2.html">가전제품</a></li>
+                        <li><a href="kitchen-art_2.html">기물</a></li>
+                        <li><a href="kitchen-art_2.html">신제품</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <h3><a href="#">기획전</a></h3>
+                    <ul class="sub">
+                        <li><a href="#">소렐 기획전</a></li>
+                        <li><a href="#">김장 용품</a></li>
+                        <li><a href="#">야외 용품</a></li>
+                    </ul>
+                </li>
+                <li><h3><a href="#">고객센터</a></h3></li>
+            </ul>
+            <ul class="he_icon">
+                <li style="text-align: center; display: grid; place-items: center;"><a href="#"><img src="../kitchenart/images/my.png" alt=""></a></li>
+                <li style="text-align: center; display: grid; place-items: center;"><a href="#"><img src="../kitchenart/images/sh.png" alt=""></a></li>
+                <li style="text-align: center; display: grid; place-items: center;" class="ham"><img src="../kitchenart/images/ham.png" alt=""></li>
+            </ul>
+        </div>
+        <div class="back_line"></div>
+        <div class="accodian">
+            <ul class="lnb">
+                <li>
+                    <a href="#">회사소개</a>
+                </li>
+                <li>
+                    <a href="#">제품</a>
+                    <ul>
+                        <li><a href="kitchen-art_2.html">Bast 상품</a></li>
+                        <li><a href="kitchen-art_2.html">냄비</a></li>
+                        <li><a href="kitchen-art_2.html">후라이팬</a></li>
+                        <li><a href="kitchen-art_2.html">압력솥</a></li>
+                        <li><a href="kitchen-art_2.html">주전자</a></li>
+                        <li><a href="kitchen-art_2.html">그릴류</a></li>
+                        <li><a href="kitchen-art_2.html">가전제품</a></li>
+                        <li><a href="kitchen-art_2.html">기물</a></li>
+                        <li><a href="kitchen-art_2.html">신제품</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">기획전</a>
+                    <ul>
+                        <li><a href="#">소렐 기획전</a></li>
+                        <li><a href="#">김장 용품</a></li>
+                        <li><a href="#">야외 용품</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">고객센터</a>
+                </li>
+            </ul>
+            <div class="close"><img src="../kitchenart/images/→.png" alt=""></div>
+        </div>
+    </div>
+    <div id="section">
+        <div class="carousel">
+            <ul class="panel">
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <ul class="side_btn">
+                <li class="prev"><img src="../kitchenart/images/ca_l.png" alt=""></li>
+                <li class="next"><img src="../kitchenart/images/ca_r.png" alt=""></li>
+            </ul>
+            <ul class="one">
+                <li class="one_first"></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div class="ranking">
+            <h2>RANKING TOP 3</h2>
+            <div class="gray_line"></div>
+            <ul class="top">
+                <li>
+                    <a href="#">
+                        <div><img src="../kitchenart/images/Top_one.png" alt=""></div>
+                        <div><img src="../kitchenart/images/renk_1.JPG" alt=""></div>
+                        <ul>
+                            <li>Easy 진공쌀통 10kg</li>
+                            <li>199,000원</li>
+                        </ul>
+                    </a>    
+                </li>
+                <li>
+                    <a href="#">
+                        <div><img src="../kitchenart/images/Top_se.png" alt=""></div>
+                        <div><img src="../kitchenart/images/renk_2.JPG" alt=""></div>
+                        <ul>
+                            <li>Easy 압력솥 1.2ℓ</li>
+                            <li>126,500원</li>
+                        </ul>
+                    </a>    
+                </li>
+                <li>
+                    <a href="#">
+                        <div><img src="../kitchenart/images/Top_th.png" alt=""></div>
+                        <div><img src="../kitchenart/images/renk_3.JPG" alt=""></div>
+                        <ul>
+                            <li>편백나무 찜기</li>
+                            <li>84,400원</li>
+                        </ul>
+                    </a>    
+                </li>
+            </ul>
+        </div>
+        <div class="mo_back">
+            <a href="kitchen-art_2.html">
+                <ul class="more">
+                    <p>더보기</p>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a>
+        </div>
+        <div class="hot">
+            <h2>HOT DEAL</h2>
+            <div class="gray_line"></div>
+            <ul class="hot_menu">
+                <li class="me_first">냄비</li>
+                <li class="me_line">|</li>
+                <li>후라이팬</li>
+                <li class="me_line">|</li>
+                <li>그릴류</li>
+                <li class="me_line">|</li>
+                <li>압력솥</li>
+            </ul>
+            <div class="hot_show">
+                <ul class="hot_p">
+                    <li>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_p_1.png" alt=""></li>
+                                <li>낮은 전골냄비</li>
+                                <li>12,100원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_p_2.png" alt=""></li>
+                                <li>금상천하 인덕션 궁중전골</li>
+                                <li>35,200원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_p_3.png" alt=""></li>
+                                <li>베이직 인덕션 냄비</li>
+                                <li>21,300원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_p_4.png" alt=""></li>
+                                <li>홈앤 세라믹 인덕션 냄비</li>
+                                <li>25,200원</li>
+                            </a>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_p_5.png" alt=""></li>
+                                <li>NEO 스테인레스 통오중..</li>
+                                <li>36,300원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_p_6.png" alt=""></li>
+                                <li>키친아트 FORT + IH..</li>
+                                <li>36,200원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_p_7.png" alt=""></li>
+                                <li>헥사 통오중 엠보 냄비</li>
+                                <li>40,100원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_p_1.png" alt=""></li>
+                                <li>일품 찜냄비</li>
+                                <li>36,500원</li>
+                            </a>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="hot_f">
+                    <li>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_f_1.png" alt=""></li>
+                                <li>뷰티나 후라이팬</li>
+                                <li>20,200원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_f_2.png" alt=""></li>
+                                <li>휴브 와플팬</li>
+                                <li>26,300원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_f_3.png" alt=""></li>
+                                <li>휴브 트리플팬</li>
+                                <li>14,900원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_f_4.png" alt=""></li>
+                                <li>쿠피아 마블 인덕션</li>
+                                <li>20,400원</li>
+                            </a>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_f_5.png" alt=""></li>
+                                <li>소렐 인덕션 주물 사각팬</li>
+                                <li>21,800원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_f_6.png" alt=""></li>
+                                <li>티타늄 IH까사 궁중팬</li>
+                                <li>24,800원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_f_7.png" alt=""></li>
+                                <li>하우스쿸 콤비팬</li>
+                                <li>16,200원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_f_8.png" alt=""></li>
+                                <li>미니 인덕션 후라이팬</li>
+                                <li>14,400원</li>
+                            </a>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="hot_g">
+                    <li>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_g_1.png" alt=""></li>
+                                <li>갤럭시 원형구이팬 32cm</li>
+                                <li>15,800원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_g_2.png" alt=""></li>
+                                <li>아르떼 원형 로스트팬</li>
+                                <li>16,300원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_g_3.png" alt=""></li>
+                                <li>아르떼 주물구이팬 사각</li>
+                                <li>14,800원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_g_4.png" alt=""></li>
+                                <li>휴브 미니 로스트 팬</li>
+                                <li>19,400원</li>
+                            </a>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_g_5.png" alt=""></li>
+                                <li>라운드 그리들 팬(IH)</li>
+                                <li>25,600원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_g_6.png" alt=""></li>
+                                <li>스톤 계란찜 멀티 원형구이</li>
+                                <li>22,200원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_g_7.png" alt=""></li>
+                                <li>쏘렐 전기 잔치팬 & 찜기</li>
+                                <li>85,200원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_g_8.png" alt=""></li>
+                                <li>하우스쿡 멀티그릴팬</li>
+                                <li>28,900원</li>
+                            </a>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="hot_pr">
+                    <li>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_pr_1.png" alt=""></li>
+                                <li>Easy 압력솥 1.2ℓ</li>
+                                <li>126,500원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_pr_2.png" alt=""></li>
+                                <li>EX 압력솥</li>
+                                <li>65,600원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_pr_3.png" alt=""></li>
+                                <li>FX 압력솥</li>
+                                <li>65,600원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_pr_4.png" alt=""></li>
+                                <li>미(美) 통오중 압력솥</li>
+                                <li>69,500원</li>
+                            </a>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_pr_5.png" alt=""></li>
+                                <li>패킹[수(秀)압력솥]</li>
+                                <li>6,000원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_pr_6.png" alt=""></li>
+                                <li>갤럭시 압력솥</li>
+                                <li>117,300원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_pr_7.png" alt=""></li>
+                                <li>페트라 1.2인용 돌 압력솥</li>
+                                <li>171,600원</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <a href="#">
+                                <li><img src="../kitchenart/images/h_pr_8.png" alt=""></li>
+                                <li>명품 압력솥</li>
+                                <li>53,900원</li>
+                            </a>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mo_back">
+            <a href="kitchen-art_2.html">
+                <ul class="more">
+                    <p>더보기</p>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a>
+        </div>
+        <div class="category">
+            <h2>PRODUCT</h2>
+            <div class="gray_line"></div>
+            <div class="cate_main">
+                <ul>
+                    <a href="#">
+                        <li class="ca_icon"><img src="../kitchenart/images/cate_p.png" alt=""></li>
+                        <li>냄비</li>
+                        <li>Pot</li>
+                    </a>
+                </ul>
+                <ul></ul>
+                <ul>
+                    <a href="#">
+                        <li class="ca_icon"><img src="../kitchenart/images/cate_f.png" alt=""></li>
+                        <li>후라이팬</li>
+                        <li>Frying pan</li>
+                    </a>
+                </ul>
+                <ul></ul>
+                <ul>
+                    <a href="#">
+                        <li class="ca_icon"><img src="../kitchenart/images/cate_g.png" alt=""></li>
+                        <li>그릴</li>
+                        <li>Grill</li>
+                    </a> 
+                </ul>
+                <ul></ul>
+                <ul>
+                    <a href="#">
+                        <li class="ca_icon"><img src="../kitchenart/images/cate_pr.png" alt=""></li>
+                        <li>압력솥</li>
+                        <li>Pressure cooker</li> 
+                    </a>
+                </ul>
+            </div>
+        </div>
+        <div class="event">
+            <h2>EVENT</h2>
+            <div>
+                <ul>
+                    <li><img src="../kitchenart/images/ev_1.png" alt=""></li>
+                    <li><img src="../kitchenart/images/ev_2.png" alt=""></li>
+                    <li><img src="../kitchenart/images/ev_3.png" alt=""></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="logo_w"><a href="#"><img src="../kitchenart/images/logo_w.png" alt=""></a></div>
+        <div class="fo_main">
+            <ul>
+                <li>
+                    상호명 : 주식회사 키친아트 |  대표 : 채기석
+                </li>
+                <li>주소 : 인천광역시 서구 장고개로118번길 5 ((주)키친아트)</li>
+                <li>통신판매업신고번호 : 2003-00044 |  사업자등록번호 : 137-81-35469 <span><a href="#">사업자정보확인 ></a></span></li>
+                <li>개인정보관리자 : 김동준</li>
+                <li>대표번호 : 032-577-0077 | 팩스번호 : 032-577-0081 | <a href="#">메일 : kitchenart@kitchenart.co.kr</a></li>
+                <li>copyright (c) kitchenart.co.kr all rights reserved.</li>
+            </ul>
+            <ul>
+                <li><a href="#">개인정보취급방침</a></li>
+                <li> | </li>
+                <li><a href="#">회사소개</a></li>
+                <li> | </li>
+                <li><a href="#">이용안내</a></li>
+                <li> | </li>
+                <li><a href="#">이용약관</a></li>
+                <li> | </li>
+                <li><a href="#">광고 제휴 문의</a></li>
+            </ul>
+        </div>
+    </div>    
+</body>
+</html>
